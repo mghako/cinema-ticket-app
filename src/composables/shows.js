@@ -5,6 +5,7 @@ export default function useShows() {
 
     const shows = ref([])
     const show = ref([])
+    
 
     const getShows = async () => {
         let response = await axios.get('/api/v1/movies')
