@@ -16,14 +16,7 @@
         </div>
         <div class="w-2/5 rounded-xl mt-6">
             <h3 class="text-2xl font-extrabold my-6 border-2 inline-block border-black rounded-xl py-2 px-1">Show Seats</h3>
-            <div class="grid grid-cols-2 gap-3">
-                <ShowSeats :seats="showSeats" v-if="showSeats"/>
-                <!-- <div v-for="(show, index) in movie.shows" :key="index">
-                    <h4>Start Time: {{show.start_time}}</h4>
-                    <h4>End Time: {{show.end_time}}</h4>
-                    <h4>Ciname Hall: {{show.cinemaHall}}</h4>
-                </div> -->
-            </div>
+            <ShowSeats :seats="showSeats" v-if="showSeats"/>
         </div>
     </div>
 </template>
