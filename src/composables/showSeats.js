@@ -6,9 +6,12 @@ export default function showSeats() {
 
     const getShowSeats =  async (id) => {
         let response = await axios.get(`/api/v1/shows/${id}/show-seats`)
-        console.log(response)
+        showSeats.value = response.data.data
     }
 
+    // const getShowSeats = async (id) => {
+        
+    // }
     return {
         showSeats,
         getShowSeats

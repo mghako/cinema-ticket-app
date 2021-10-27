@@ -17,7 +17,7 @@
         <div class="w-2/5 rounded-xl mt-6">
             <h3 class="text-2xl font-extrabold my-6 border-2 inline-block border-black rounded-xl py-2 px-1">Show Seats</h3>
             <div class="grid grid-cols-2 gap-3">
-                <!-- <ShowSeats></ShowSeats> -->
+                <ShowSeats :seats="showSeats" v-if="showSeats"/>
                 <!-- <div v-for="(show, index) in movie.shows" :key="index">
                     <h4>Start Time: {{show.start_time}}</h4>
                     <h4>End Time: {{show.end_time}}</h4>
@@ -52,12 +52,12 @@ export default {
 
         const fetchShowSeats = async (id) => {
             await getShowSeats(id)
+            console.log(showSeats.value)
         }
         return {
             movie,
-            getShowSeats,
+            fetchShowSeats,
             showSeats,
-            fetchShowSeats
         }
     }
 }
