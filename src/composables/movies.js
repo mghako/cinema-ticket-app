@@ -13,7 +13,6 @@ export default function useMovies() {
     const getMovie = async (id) => {
         let response = await axios.get('/api/v1/movies/'+ id)
         movie.value = response.data.data
-        console.log(response.data.data)
     }
 
     return {
