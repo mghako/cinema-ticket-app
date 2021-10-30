@@ -61,23 +61,31 @@ export default {
         }
     )
 
-    const checkSeatStatus = computed( () => {
-      
+    const checkBookSeatStatus = computed( (seat) => {
+      return bookSeats.value.includes(seat)
     })
     
+    function checkDuplicateBookSeats(seat) {
+      console.log(seat)
+      let filteredBookSeats = bookSeats.value.filter(bookSeat => bookSeat.id == seat.id)
+      // console.log(filteredBookSeats)
+      return !filteredBookSeats.length
+    }
 
     const pressSeat = async (seat) => {
-      await setBookSeats(seat)
+      // console.log(seat)
+      if(bookSeats.value.length == 0 || checkDuplicateBookSeats(seat)) {
+        await setBookSeats(seat)
+      } 
     }
 
-    const checkSelectedSeat = (seat) => {
-      
-    }
 
     return {
       seatLists,
       pressSeat,
-      bookSeats
+      bookSeats,
+      checkDuplicateBookSeats,
+      checkBookSeatStatus
     }
   }
 }
