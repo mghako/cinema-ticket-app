@@ -6,22 +6,33 @@
         class="w-full cursor-pointer py-1 rounded-xl"
         :class="[seat.status != 'free' ? 'bg-red-600' : 'bg-green-400 hover:bg-indigo-600 hover:text-white']"
         :disabled="seat.status != 'free'"
-       >{{ seat.cinema_seat.seat_number }}</button>
+       >
+        {{ seat.cinema_seat.seat_number }}
+       </button>
     </div>
   </div>
   <div>
     <h3>Chose Seats:</h3>
-    <div class="gruid grid-cols-6 gap-1">
-      <!-- <div v-for="(bookSeat, index) in bookSeats" :key="index">
-
-      </div> -->
+    <div class="grid grid-cols-6 gap-1">
+      
+      <div v-for="(bookSeat, index) in bookSeats" :key="index">
+        <button 
+        class="w-full cursor-pointer py-1 rounded-xl"
+        :class="[bookSeat.status != 'free' ? 'bg-red-600' : 'bg-green-400 hover:bg-indigo-600 hover:text-white']"
+        >
+          {{ bookSeat.cinema_seat.seat_number }}
+        </button>
+      </div>
     </div>
+  </div>
+  <div>
+    <!-- {{bookSeats}} -->
   </div>
 </template>
 
 <script>
 
-import { onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
  import useShowSeats from '../composables/showSeats'
  import useBookSeats from '../composables/bookSeats'
 
@@ -43,11 +54,24 @@ export default {
 
     watch(
       () => props.seats, 
-      (current, old) => { seatLists.value = current }
+      (currentValue, old) => { 
+        seatLists.value = currentValue
+        bookSeats.value.length  = 0
+        
+        }
     )
+
+    const checkSeatStatus = computed( () => {
+      
+    })
+    
 
     const pressSeat = async (seat) => {
       await setBookSeats(seat)
+    }
+
+    const checkSelectedSeat = (seat) => {
+      
     }
 
     return {
