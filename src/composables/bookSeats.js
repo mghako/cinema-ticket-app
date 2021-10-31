@@ -9,8 +9,14 @@ export default function bookSeats() {
         bookSeats.value = [...bookSeats.value, seat]
     }
 
+    const removeBookSeat = async (seat) => {
+        let filterRemovedBookSeat = bookSeats.value.filter( bookSeat => bookSeat.id != seat.id)
+        bookSeats.value = [...filterRemovedBookSeat]
+    }
+
     return {
         bookSeats,
-        setBookSeats
+        setBookSeats,
+        removeBookSeat
     }
 }

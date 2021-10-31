@@ -16,7 +16,8 @@
     <div class="grid grid-cols-6 gap-1">
       
       <div v-for="(bookSeat, index) in bookSeats" :key="index">
-        <button 
+        <button
+        @click="removeSeat(bookSeat)" 
         class="w-full cursor-pointer py-1 rounded-xl"
         :class="[bookSeat.status != 'free' ? 'bg-red-600' : 'bg-green-400 hover:bg-indigo-600 hover:text-white']"
         >
@@ -26,7 +27,6 @@
     </div>
   </div>
   <div>
-    <!-- {{bookSeats}} -->
   </div>
 </template>
 
@@ -50,7 +50,7 @@ export default {
     let seatLists = ref([])
     
     const { toggleSeatStatus } = useShowSeats()
-    const { bookSeats, setBookSeats } = useBookSeats()
+    const { bookSeats, setBookSeats, removeBookSeat } = useBookSeats()
 
     watch(
       () => props.seats, 
@@ -66,12 +66,13 @@ export default {
     })
     
     function checkDuplicateBookSeats(seat) {
-      console.log(seat)
       let filteredBookSeats = bookSeats.value.filter(bookSeat => bookSeat.id == seat.id)
-      // console.log(filteredBookSeats)
       return !filteredBookSeats.length
     }
-
+    const removeSeat = async (seat) => {
+      // console.log(seat)
+      await removeBookSeat(seat)
+    }
     const pressSeat = async (seat) => {
       // console.log(seat)
       if(bookSeats.value.length == 0 || checkDuplicateBookSeats(seat)) {
@@ -85,7 +86,8 @@ export default {
       pressSeat,
       bookSeats,
       checkDuplicateBookSeats,
-      checkBookSeatStatus
+      checkBookSeatStatus,
+      removeSeat
     }
   }
 }
