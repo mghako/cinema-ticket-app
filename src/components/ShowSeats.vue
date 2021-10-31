@@ -11,20 +11,26 @@
        </button>
     </div>
   </div>
-  <div>
+  <div class="mt-10">
     <h3>Chose Seats:</h3>
-    <div class="grid grid-cols-6 gap-1">
+    <div class="grid grid-cols-6 gap-1 border-2 border-indigo-800 rounded-xl p-6 bg-indigo-600">
       
       <div v-for="(bookSeat, index) in bookSeats" :key="index">
         <button
         @click="removeSeat(bookSeat)" 
-        class="w-full cursor-pointer py-1 rounded-xl"
-        :class="[bookSeat.status != 'free' ? 'bg-red-600' : 'bg-green-400 hover:bg-indigo-600 hover:text-white']"
+        class="w-full cursor-pointer py-1 rounded-xl bg-yellow-400 text-wa-600 hover:bg-ind"
+        
         >
           {{ bookSeat.cinema_seat.seat_number }}
         </button>
       </div>
     </div>
+    <button 
+      @click="pressBuyTicket"
+      class="mt-10 border-2 rounded py-1 px-2 uppercase hover:bg-green-400"
+      :disabled="checkBookSeatEmpty"
+    >
+    Buy Tickets</button>
   </div>
   <div>
   </div>
@@ -50,7 +56,7 @@ export default {
     let seatLists = ref([])
     
     const { toggleSeatStatus } = useShowSeats()
-    const { bookSeats, setBookSeats, removeBookSeat } = useBookSeats()
+    const { bookSeats, setBookSeats, removeBookSeat, buyBookSeats } = useBookSeats()
 
     watch(
       () => props.seats, 
@@ -60,7 +66,9 @@ export default {
         
         }
     )
-
+    const checkBookSeatEmpty = computed(() => {
+      return bookSeats.value.length == 0
+    })
     const checkBookSeatStatus = computed( (seat) => {
       return bookSeats.value.includes(seat)
     })
@@ -70,7 +78,6 @@ export default {
       return !filteredBookSeats.length
     }
     const removeSeat = async (seat) => {
-      // console.log(seat)
       await removeBookSeat(seat)
     }
     const pressSeat = async (seat) => {
@@ -80,6 +87,9 @@ export default {
       } 
     }
 
+    const pressBuyTicket = async () => {
+      await buyBookSeats()
+    }
 
     return {
       seatLists,
@@ -87,7 +97,9 @@ export default {
       bookSeats,
       checkDuplicateBookSeats,
       checkBookSeatStatus,
-      removeSeat
+      removeSeat,
+      checkBookSeatEmpty,
+      pressBuyTicket
     }
   }
 }

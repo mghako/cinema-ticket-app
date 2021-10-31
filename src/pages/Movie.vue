@@ -9,7 +9,7 @@
             <div class="grid grid-cols-1 gap-3">
                 <div @click.prevent= "getSeatsFromShow(show.id)" 
                     v-for="(show, index) in movie.shows" :key="index" 
-                    class="border-2 border-indigo-600 rounded-xl py-4 hover:bg-indigo-600 hover:text-white cursor-pointer"
+                    class="my-2 border-2 border-indigo-600 rounded-xl py-4 hover:bg-indigo-600 hover:text-white cursor-pointer"
                     :class="setShowTimeBg"
                 >
                     <h4>Start Time: <strong>{{show.start_time}}</strong></h4>
@@ -27,7 +27,7 @@
 
 <script>
 
-    import { computed, onMounted, ref } from 'vue'
+    import { computed, onMounted, ref, watch } from 'vue'
     import useMovies from '../composables/movies'
     import useShowSeats from '../composables/showSeats'
     import ShowSeats from '../components/ShowSeats.vue'
@@ -45,6 +45,8 @@
         },
         setup(props, context) {
             const clickedShowTime = ref('')
+            const currentShowId = ref('')
+
             const {movie, getMovie} = useMovies()
             const {showSeats, getShowSeats} = useShowSeats()
 
@@ -52,11 +54,14 @@
                 getMovie(props.id)
             })
             
+            // watch()
+
             const setShowTimeBg = computed( () => {
-                return clickedShowTime.value == show.id ?? 'bg-indigo-600 text-white'
+                return clickedShowTime.value == currentShowId.value ? 'bg-indigo-600 text-white' : ''
             })
 
             const getSeatsFromShow = async (id) => {
+                currentShowId.value = id
                 clickedShowTime.value = id
                 await getShowSeats(id)
             }
@@ -64,7 +69,9 @@
                 movie,
                 showSeats,
                 getSeatsFromShow,
-                clickedShowTime
+                clickedShowTime,
+                currentShowId,
+                setShowTimeBg
             }
         }
     }

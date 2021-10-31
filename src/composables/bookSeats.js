@@ -14,9 +14,14 @@ export default function bookSeats() {
         bookSeats.value = [...filterRemovedBookSeat]
     }
 
+    const buyBookSeats = async () => {
+        await axios.post('/api/v1/show-seats/buy', bookSeats.value)
+    }
+
     return {
         bookSeats,
         setBookSeats,
-        removeBookSeat
+        removeBookSeat,
+        buyBookSeats
     }
 }
