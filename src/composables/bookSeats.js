@@ -15,7 +15,8 @@ export default function bookSeats() {
     }
 
     const buyBookSeats = async () => {
-        await axios.post('/api/v1/show-seats/buy', bookSeats.value)
+        let response = await axios.post('/api/v1/show-seats/buy', {'bookSeats': bookSeats.value})
+        console.log(response)
     }
 
     return {
