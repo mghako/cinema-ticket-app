@@ -1,9 +1,11 @@
 <template>
-  <div class="grid grid-cols-6 gap-1 border-2 border-indigo-600 rounded-xl p-6">
+  <h3 v-if="seatLists.length == 0" class="text-center text-red-600 font-extrabold !!!">Please Choose Show Time</h3>
+  <div v-if="seatLists.length != 0" class="mt-2 grid grid-cols-6 gap-1 border-2 border-indigo-600 rounded-xl py-2">
+    
     <div v-for="(seat, index) in seatLists" :key="index" class="">
       <button 
         @click="pressSeat(seat)"
-        class="w-full cursor-pointer py-1 rounded-xl"
+        class="w-1/2 cursor-pointer py-1 rounded-xl"
         :class="[seat.status != 'free' ? 'bg-red-600' : 'bg-green-400 hover:bg-indigo-600 hover:text-white']"
         :disabled="seat.status != 'free'"
        >

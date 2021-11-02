@@ -10,7 +10,7 @@
                 <div @click.prevent= "getSeatsFromShow(show.id)" 
                     v-for="(show, index) in movie.shows" :key="index" 
                     class="my-2 border-2 border-indigo-600 rounded-xl py-4 hover:bg-indigo-600 hover:text-white cursor-pointer"
-                    :class="setShowTimeBg"
+                    :class="[show.id == currentShowId ? 'bg-indigo-600 text-white' : '']"
                 >
                     <h4>Start Time: <strong>{{show.start_time}}</strong></h4>
                     <h4>End Time: <strong>{{show.end_time}}</strong></h4>
@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="w-2/5 rounded-xl mt-6">
-            <h3 class="text-2xl font-extrabold my-6 border-2 inline-block border-black rounded-xl py-2 px-1">Show Seats</h3>
+            <h3 class="text-2xl font-extrabold my-6 border-2 inline-block border-black rounded-xl py-2 px-1 cursor-pointer">Show Seats</h3>
             <ShowSeats :seats="showSeats" />
         </div>
     </div>
@@ -57,7 +57,7 @@
             // watch()
 
             const setShowTimeBg = computed( () => {
-                return clickedShowTime.value == currentShowId.value ? 'bg-indigo-600 text-white' : ''
+                // return clickedShowTime.value != currentShowId.value ? 'bg-indigo-600 text-white' : ''
             })
 
             const getSeatsFromShow = async (id) => {
