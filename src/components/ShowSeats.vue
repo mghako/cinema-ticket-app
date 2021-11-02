@@ -55,20 +55,21 @@ export default {
 
     let seatLists = ref([])
     
-    const { toggleSeatStatus } = useShowSeats()
+    const { showSeats, toggleSeatStatus, getShowSeats } = useShowSeats()
     const { bookSeats, setBookSeats, removeBookSeat, buyBookSeats } = useBookSeats()
 
     watch(
       () => props.seats, 
       (currentValue, old) => { 
-        seatLists.value = currentValue
-        bookSeats.value.length  = 0
-        
+          seatLists.value = currentValue
+          bookSeats.value.length  = 0
         }
     )
+
     const checkBookSeatEmpty = computed(() => {
       return bookSeats.value.length == 0
     })
+
     const checkBookSeatStatus = computed( (seat) => {
       return bookSeats.value.includes(seat)
     })
@@ -77,11 +78,12 @@ export default {
       let filteredBookSeats = bookSeats.value.filter(bookSeat => bookSeat.id == seat.id)
       return !filteredBookSeats.length
     }
+
     const removeSeat = async (seat) => {
       await removeBookSeat(seat)
     }
+
     const pressSeat = async (seat) => {
-      // console.log(seat)
       if(bookSeats.value.length == 0 || checkDuplicateBookSeats(seat)) {
         await setBookSeats(seat)
       } 
@@ -89,6 +91,8 @@ export default {
 
     const pressBuyTicket = async () => {
       await buyBookSeats()
+      await getShowSeats(props.seats[0].show.id)
+      seatLists.value = showSeats.value
     }
 
     return {
@@ -99,7 +103,7 @@ export default {
       checkBookSeatStatus,
       removeSeat,
       checkBookSeatEmpty,
-      pressBuyTicket
+      pressBuyTicket,
     }
   }
 }
