@@ -7,6 +7,10 @@ export default function bookSeats() {
 
     
     const setBookSeats = async (seat) => {
+        if(seat.status != 'free') {
+            alert('cant choose this seat')
+            return
+        }
         bookSeats.value = [...bookSeats.value, seat]
     }
 
@@ -27,7 +31,7 @@ export default function bookSeats() {
             alert("Booking Success")
             bookSeats.value.length = 0
         }
-        
+
         return response.data
 
     }
