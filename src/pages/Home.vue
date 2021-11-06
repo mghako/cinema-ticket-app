@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { onMounted } from '@vue/runtime-core'
+import { onMounted } from 'vue'
 import useMovies from "../composables/movies"
 
 export default {
