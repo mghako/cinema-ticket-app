@@ -16,8 +16,11 @@ import useMovies from "../composables/movies"
 
 export default {
   setup() {
-    const {movies, getMovies} = useMovies()
-    onMounted(getMovies)
+    
+    const {movies, todayMovies} = useMovies()
+
+    onMounted(todayMovies)
+
     let current = new Date()
     let currentDate = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`
 

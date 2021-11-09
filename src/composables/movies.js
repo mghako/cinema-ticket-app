@@ -7,8 +7,7 @@ export default function useMovies() {
 
     const getMovies = async () => {
         let response = await axios.get('/api/v1/movies')
-        console.log(response.data.data)
-        // movies.value = response.data.data
+        movies.value = response.data.data
     }
 
     const getMovie = async (id) => {
@@ -16,11 +15,18 @@ export default function useMovies() {
         movie.value = response.data.data
     }
 
+    const todayMovies = async () => {
+        let response = await axios.get('api/v1/movies/today')
+        movies.value = response.data.data
+        console.log(response)
+    }
+
     return {
         movie,
         movies,
         getMovie,
-        getMovies
+        getMovies,
+        todayMovies
     }
 
 }
